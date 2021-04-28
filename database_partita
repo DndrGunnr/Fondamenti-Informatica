@@ -1,0 +1,507 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+
+class data{
+    public:
+        // COSTRUTTORI
+        data(); // default
+        data(int g, int m, int a); // parametri
+        data(const data& d); // copia
+
+        // DISTRUTTORE
+        ~data();
+
+        // SELETTORI
+        int get_giorno() const;
+        int get_mese() const;
+        int get_anno() const;
+
+        // MODIFICATORI
+        void set_giorno(int g);
+        void set_mese(int m);
+        void set_anno(int a);
+
+        // OPERATORI
+        void set_data();
+        void stampa();
+        void g_precedente();
+        void g_successivo();
+
+
+    private:
+        int _giorno;
+        int _mese;
+        int _anno;
+};
+
+
+data::data(): _giorno(1), _mese(1), _anno(1900){
+
+}
+
+data::data(int g, int m, int a): _giorno(g), _mese(m), _anno(a){
+
+}
+
+data::data(const data& d){
+    _giorno = d._giorno;
+    _mese = d._mese;
+    _anno = d._anno;
+}
+
+data::~data(){
+
+}
+
+int data::get_giorno() const{
+    return _giorno;
+}
+
+int data::get_mese() const{
+    return _mese;
+}
+
+int data::get_anno() const{
+    return _anno;
+}
+
+void data::set_giorno(int g){
+    _giorno = g;
+}
+
+void data::set_mese(int m){
+    _mese = m;
+}
+        
+void data::set_anno(int a){
+    _anno = a;
+}
+
+void data::set_data(){
+    int g, m, a;
+    cout << "Inserire data" << endl;
+
+    cout << "Giorno: ";
+    cin >> g;
+    set_giorno(g);  
+
+    cout << "Mese: ";
+    cin >> m;
+    set_mese(m);
+
+    cout << "Anno: ";
+    cin >> a;
+    set_anno(a);
+}
+
+void data::stampa(){
+    cout << get_giorno() << "/" << get_mese() << "/" << get_anno() << endl; 
+}
+
+void data::g_precedente(){
+    // torno al 31
+    if(_giorno == 1 && (_mese == 2 || _mese == 4 || _mese == 6 || _mese == 8 || _mese == 9 || _mese == 11)){
+        cout << "Il giorno precedente è: 31/" << _mese - 1 << "/" << _anno << endl;
+    }
+
+    // torno al 30
+    else if(_giorno == 1 && (_mese == 5 || _mese == 7 || _mese == 10 || _mese == 12 )){
+       cout << "Il giorno precedente è: 30/" << _mese - 1 << "/" << _anno << endl;
+    }
+
+    // torno al 28
+    else if(_giorno == 1 && _mese == 3){
+        if (_anno % 4 == 0){
+            cout << "Il giorno precedente è: 29/2" << "/" << _anno << endl;
+        }
+        else{
+            cout << "Il giorno precedente è: 28/2" << "/" << _anno << endl;
+        }
+    }
+
+    //primo dell'anno
+    else if(_giorno == 1 && _mese == 1){
+        cout << "Il giorno precedente è: 31/12" << "/" << _anno - 1 << endl;;
+    }
+
+    else{
+        cout << "Il giorno precedente è: " << _giorno - 1 << "/" << _mese << "/" << _anno << endl;;
+    }
+}
+
+void data::g_successivo(){
+    // parto dal 31
+    if(_giorno == 31 && _mese >=1 && _mese <= 11 ){
+        cout << "Il giorno successivo è: 1/" << _mese + 1 << "/" << _anno << endl;;
+    }
+
+    // parto dal 30
+    else if(_giorno == 30 && (_mese == 4 || _mese == 6 || _mese == 9 || _mese == 11 )){
+        cout << "Il giorno successivo è: 1/" << _mese + 1 << "/" << _anno << endl;;
+    }
+
+    // parto dal 28
+    else if(_giorno == 28 && _mese == 2){
+            if (_anno % 4 == 0){
+            cout << "Il giorno successivo è: 29/2" << "/" << _anno << endl;;
+            }
+            else{
+                cout << "Il giorno successivo è: 1/" << _mese + 1 << "/" << _anno << endl;;
+            }
+    }
+
+    // parto dal 29
+    else if (_giorno == 29 && _mese == 2){
+        cout << "Il giorno successivo è: 1/" << _mese + 1 << "/" << _anno << endl;;
+    }
+
+    // ultimo dell'anno
+    else if(_giorno == 31 && _mese == 12 ){
+        cout << "Il giorno successivo è: 1/1" << "/" << _anno + 1 << endl;;
+    }
+
+
+    else{
+        cout << "Il giorno successivo è: " << _giorno + 1 << "/" << _mese << "/" << _anno << endl;
+    }
+}
+
+
+
+
+const int dim = 33;
+
+class partita{
+    public:
+        // COSTRUTTORI
+        partita(); // default
+        partita(data d1, char s1[dim], char s2[dim], int g1, int g2, int esp, int amm); // parametri
+        partita(const partita& p);
+
+        // DISTRUTTORE
+        ~partita();
+
+        // SELETTORI
+        data get_data_partita() const;
+        char* get_nome_squadra1() const;
+        char* get_nome_squadra2() const;
+        int get_goal_s1() const;
+        int get_goal_s2() const;
+        int get_num_giocatori_espulsi() const;
+        int get_num_giocatori_ammoniti() const;
+
+        // MODIFICATORI
+        void set_data_partita(data d1);
+        void set_nome_squadra1(char s1[dim]);
+        void set_nome_squadra2(char s2[dim]);
+        int set_goal_s1(int g1);
+        int set_goal_s2(int g2);
+        int set_num_giocatori_espulsi(int esp);
+        int set_num_giocatori_ammoniti(int amm);
+
+        // OPERATORI
+        void inserisci_dati();
+        void stampa_dati();
+
+
+    private:
+        data data_partita;
+        char nome_squadra1[dim];
+        char nome_squadra2[dim];
+        int goal_s1;
+        int goal_s2;
+        int num_giocatori_espulsi;
+        int num_giocatori_ammoniti;
+};
+
+
+partita::partita(): data_partita(), nome_squadra1("squadra_1"), nome_squadra2("squadra_2"){
+
+}
+
+partita::partita(data d1, char s1[dim], char s2[dim], int g1, int g2, int esp, int amm): data_partita(d1) {
+
+    set_nome_squadra1(s1);
+    set_nome_squadra2(s2);
+    set_goal_s1(g1);
+    set_goal_s2(g2);
+    set_num_giocatori_espulsi(esp);
+    set_num_giocatori_ammoniti(amm);
+    // // nome 1
+    // for(int i = 0; i < 32; i++){
+    //     nome_squadra1[i] = s1[i];
+    // }
+
+
+    // // nome 2
+    // for(int j = 0; j < 32; j++){
+    //     nome_squadra1[j] = s1[j];
+    // }
+
+    // // goal 1
+    // if (g1 > 0){
+    //     goal_s1 = g1;
+    // }
+    // else {
+    //     goal_s1 = 0;
+    // }
+    
+
+    // // goal 2
+    // if (g2 > 0){
+    //     goal_s2 = g2;
+    // }
+    // else {
+    //     goal_s2 = 0;
+    // }
+
+    // // espulsi
+    // if (esp > 0){
+    //     num_giocatori_espulsi = esp;
+    // }
+    // else {
+    //     num_giocatori_espulsi = 0;
+    // }
+
+    // // ammoniti
+    // if (amm > 0){
+    //     num_giocatori_ammoniti = amm;
+    // }
+    // else {
+    //     num_giocatori_ammoniti = 0;
+    // }
+}
+
+partita::partita(const partita& p): data_partita(p.get_data_partita()){
+    set_nome_squadra1(p.get_nome_squadra1());
+    set_nome_squadra2(p.get_nome_squadra2());
+    set_goal_s1(p.get_goal_s1());
+    set_goal_s2(p.get_goal_s2());
+    set_num_giocatori_espulsi(p.get_num_giocatori_espulsi());
+    set_num_giocatori_ammoniti(p.get_num_giocatori_ammoniti());
+}
+
+partita::~partita(){
+
+}
+
+data partita::get_data_partita() const{
+    return data_partita;
+}
+        
+char* partita::get_nome_squadra1() const{
+    char* p = NULL;
+    *p = nome_squadra1[dim];
+
+    return p;
+}
+
+char* partita::get_nome_squadra2() const{
+    char* p = NULL;
+    *p = nome_squadra2[dim];
+
+    return p;
+}
+    
+int partita::get_goal_s1() const{
+    return goal_s1;
+}
+
+int partita::get_goal_s2() const{
+    return goal_s2;
+}
+
+int partita::get_num_giocatori_espulsi() const{
+    return num_giocatori_espulsi;
+}
+
+int partita::get_num_giocatori_ammoniti() const{
+    return num_giocatori_ammoniti;
+}
+
+void partita::set_data_partita(data d1){
+    data_partita.set_giorno(d1.get_giorno());
+    data_partita.set_mese(d1.get_mese());
+    data_partita.set_anno(d1.get_anno());
+}
+
+void partita::set_nome_squadra1(char s1[dim]){
+    for(int i = 0; i < dim; i++){
+        nome_squadra1[i] = s1[i];
+    }
+}
+
+void partita::set_nome_squadra2(char s2[dim]){
+    for(int i = 0; i < dim; i++){
+        nome_squadra2[i] = s2[i];
+    }
+}
+
+int partita::set_goal_s1(int g1){
+    if(g1 < 0){
+        return goal_s1;
+    }
+    else{
+        goal_s1 = g1;
+        return goal_s1;
+    }
+}
+
+int partita::set_goal_s2(int g2){
+    if(g2 < 0){
+        return goal_s2;
+    }
+    else{
+        goal_s2 = g2;
+        return goal_s2;
+    }
+}
+
+int partita::set_num_giocatori_espulsi(int esp){
+    if(esp < 0 && esp > 5){
+        return num_giocatori_espulsi;
+    }
+    else{
+        num_giocatori_espulsi = esp;
+        return num_giocatori_espulsi;
+    }
+}
+
+int partita::set_num_giocatori_ammoniti(int amm){
+    if(amm < 0 && amm > 22){
+        return num_giocatori_ammoniti;
+    }
+    else{
+        num_giocatori_ammoniti = amm;
+        return num_giocatori_ammoniti;
+    }
+}
+
+void partita::inserisci_dati(){
+    cout << "Inserire le informazione relative a una partita" << endl;
+
+    // data
+    data d;
+    do{
+        int g, m, a;
+        cout << "Inserire la data" << endl;
+
+        cout << "Giorno: ";
+        cin >> g;
+
+        cout << "Mese: ";
+        cin >> m;
+
+        cout << "Anno: ";
+        cin >> a;
+
+        d.set_giorno(g);
+        d.set_mese(m);
+        d.set_anno(a);
+
+    } while(d.get_giorno() <= 0 && d.get_giorno() >= 30 && d.get_mese() <= 0 && d.get_mese() > 12 && d.get_anno() <= 0);
+
+    // NON FUNZIONA
+    // nome 1
+    char s1[dim];
+    //do{
+        int l = strlen(s1);
+        cout << "Inserire il nome della prima squadra: ";
+        cin >> l;
+
+        for(int i = 0; i < l ; i++){
+            cin >> s1[i];
+        }
+        set_nome_squadra1(s1);
+
+    //} 
+
+    // NON FUNZIONA
+    // nome 2
+    char s2[dim];
+    //do
+        int m = strlen(s2);
+        cout << "Inserire il nome della seconda squadra: ";
+        cin >> m;
+
+        for(int i = 0; i < m; i++){
+            cin >> s2[i];
+        }
+        set_nome_squadra2(s2);
+
+    //}
+
+    // goal 1
+    int g1;
+    do{
+        cout << "Inserire il numero di goal della prima squadra: ";
+        cin >> g1;
+        set_goal_s1(g1);
+
+    } while(g1 < 0);
+
+    // goal 2
+    int g2;
+    do{
+        cout << "Inserire il numero di goal della seconda squadra: ";
+        cin >> g2;
+        set_goal_s2(g2);
+
+    } while(g2 < 0);
+
+    // espulsi
+    int esp;
+    do{
+        cout << "Inserire il numero di espulsi: ";
+        cin >> esp;
+        set_num_giocatori_espulsi(esp);
+
+    } while(esp < 0 || esp > 5);
+
+    // ammoniti
+    int amm;
+    do{
+        cout << "Inserire il numero di ammoniti: ";
+        cin >> amm;
+        set_num_giocatori_ammoniti(amm);
+
+    } while(amm < 0 || amm > 22);
+}
+
+// NON FUNZIONA
+void partita::stampa_dati(){
+    // data
+    cout << "Data: " << get_data_partita().get_giorno() << "/" << get_data_partita().get_mese() << "/" << get_data_partita().get_anno() << endl;
+
+    // s1
+    cout << "Nome squadra1: " << get_nome_squadra1() << endl;
+
+    // s2
+    cout << "Nome squadra2: " << get_nome_squadra2() << endl;
+
+    // goal 1
+    cout << "Goal_1: " << get_goal_s1() << endl;
+
+    // goal 2
+    cout << "Goal_2: " << get_goal_s2() << endl;
+
+    // espulsi
+    cout << "Numero di giocatori espulsi: " << get_num_giocatori_espulsi() << endl;
+
+    // ammoniti
+    cout << "Numero di giocatori ammoniti: " << get_num_giocatori_ammoniti() << endl;
+}
+
+
+
+
+
+int main(){
+    partita p1;
+
+    p1.inserisci_dati();
+    p1.stampa_dati();
+
+    return 0;
+}
