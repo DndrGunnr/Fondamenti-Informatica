@@ -402,35 +402,17 @@ void partita::inserisci_dati(){
 
     } while(d.get_giorno() <= 0 && d.get_giorno() >= 30 && d.get_mese() <= 0 && d.get_mese() > 12 && d.get_anno() <= 0);
 
-    // NON FUNZIONA
     // nome 1
     char s1[dim];
-    //do{
-        int l = strlen(s1);
-        cout << "Inserire il nome della prima squadra: ";
-        cin >> l;
-
-        for(int i = 0; i < l ; i++){
-            cin >> s1[i];
-        }
-        set_nome_squadra1(s1);
-
-    //} 
-
-    // NON FUNZIONA
+    cout << "Inserire il nome della prima squadra: ";
+    cin >> s1;
+    set_nome_squadra1(s1); 
+    
     // nome 2
     char s2[dim];
-    //do
-        int m = strlen(s2);
-        cout << "Inserire il nome della seconda squadra: ";
-        cin >> m;
-
-        for(int i = 0; i < m; i++){
-            cin >> s2[i];
-        }
-        set_nome_squadra2(s2);
-
-    //}
+    cout << "Inserire il nome della seconda squadra: ";
+    cin >> s2;
+    set_nome_squadra2(s2);
 
     // goal 1
     int g1;
