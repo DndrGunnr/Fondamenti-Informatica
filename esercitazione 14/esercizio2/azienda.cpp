@@ -8,7 +8,9 @@ l’elemento nella terza riga e quarta colonna di _D valesse 10, significherebbe
 dipartimento lavorano 10 dipendenti appartenenti alla quarta classe stipendiale. Si implementino,
 inoltre, i seguenti metodi: */
  #include <iostream>
+ #include <fstream>
  using namespace std;
+
 
  class Dipendenti{
      private:
@@ -19,10 +21,9 @@ inoltre, i seguenti metodi: */
         int _D[8][5];
         //costruttore di default
      public:
+        //costruttori
         Dipendenti();
-        //costruttore  con parametri
         Dipendenti(float v[5],int m[8][5]);
-        //costruttore di copia
         Dipendenti(Dipendenti& p);
         //distruttore
         ~Dipendenti();
@@ -86,8 +87,50 @@ Dipendenti::~Dipendenti()
     
 }
 
+int Dipendenti::totaleDipendenti()
+{
+    int somma_dipendenti=0;
+    for (int i=0; i<8; i++)
+    {
+        for(int j=0; j<5; j++)
+            somma_dipendenti+=_D[i][j];
+    }
+    return somma_dipendenti;
+}
+
+void Dipendenti::estremiStipendio()
+{
+    double costo_max=_s[0]*_D[0][0], costo_min=_s[0]*_D[0][0];
+    int dipartimento_max_R=1, dipartimento_max_C=1, dipartimento_min_R=1, dipartimento_min_C=1; 
+    for (int i=0; i<8; i++)
+    {
+        for(int j=0; j<5; j++)
+        {
+            if(costo_max<(_s[j]*_D[i][j]))
+            {   
+                costo_max=_s[j]*_D[i][j]; 
+                dipartimento_max_R=i+1;
+                dipartimento_max_C=j+1;
+            }
+            if(costo_min>(_s[j]*_D[i][j]))
+            {
+                costo_min=_s[j]*_D[i][j];
+                dipartimento_min_C=j+1;
+                dipartimento_min_R=i+1;
+            }
+        }
+    }
+    cout<<"il dipartimento più costoso ha indice: "<<dipartimento_max_R<<" "<<dipartimento_min_C<<endl;
+    cout<<"con una spesa di: "<<costo_max<<endl;
+    cout<<"il dipartimento meno costoso ha indice: "<<dipartimento_min_R<<" "<<dipartimento_min_R<<endl;
+    cout<<"con una spesa di: "<<costo_min<<endl;
+
+}
+
  int main()
 {
+    int stp[5];
+    float Dip[8][5];
     Dipendenti a;
     Dipendenti b(a);
     return 0;
